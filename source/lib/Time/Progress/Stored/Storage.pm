@@ -16,8 +16,6 @@ key.
 
 =cut
 
-=cut
-
 sub store {
     my $self = shift;
     my ($id, $content) = @_;
