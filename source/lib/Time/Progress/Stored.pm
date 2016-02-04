@@ -16,8 +16,8 @@ progress, but you need to actually display the progress to the user in
 a different process.
 
 Typically this is a long running web request in the web server or in a
-job queue qorker, while the web browser periodically sends ajax
-requests to get updated on the current progress status to show in a
+job queue worker, while the web browser periodically sends Ajax
+requests to get updated on the current progress status to show using a
 progress bar.
 
 Time::Progress::Stored stores the progress report as the worker
@@ -29,7 +29,7 @@ The report is a hashref with the following details:
     | id                | "progress-1454518121172"   |
     | max               | 262                        |
     | current           | 2                          |
-    | activity          | "Importing Business Units" |
+    | activity          | "Importing Users"          |
     | elapsed_seconds   | "1"                        |
     | elapsed_time      | " 0:01"                    |
     | finish_time       | "Wed Feb 3 16:50:54 2016"  |
@@ -67,6 +67,7 @@ The report is a hashref with the following details:
 
 
     ### HTTP endpoint, e.g. a Mojo controller for /progress/:progress_id
+
     sub get {
         my $self = shift;
         my $progress_id = $self->param("progress_id");
@@ -116,15 +117,15 @@ it's simply fetched and returned as a JSON payload.
 See above for the contents of the payload.
 
 
-=head3 Client with long running web request
+=head3 Client making a request to a long running web request
 
 This is for when the long running process is running as one web
 request.
 
-A web page would typically provide a progress id while kickking off
-the long running process.
+A web page would typically provide a progress id while making the
+initial Ajax request to kick off the long running process.
 
-The client then sends ajax requests to the HTTP endpoint (using the
+The client then sends Ajax requests to the HTTP endpoint (using the
 id) every second to get updates on the progress. It does this until
 the long running progress has responded.
 
@@ -133,17 +134,18 @@ information to provide user feedback, e.g. percent done, time left,
 what's going on etc.
 
 
-=head3 Client with asynchronous worker process
+=head3 Client making a request to a asynchronous worker process
 
 This is for when the long running process is running as a background
 process, e.g. in a job queue.
 
 A web page would typically kick off the long running process. Instead
 of the client passing in a progress id, the $progress object defaults
-to a unique id (or it can just make one up), and the HTTP endpoint can
-report $progress->progress_id back to the client.
+to a unique id (or you can just make one up yourself), and the HTTP
+endpoint can report $progress->progress_id back to the client in the
+response.
 
-The client then sends ajax requests to the HTTP endpoint (using the
+The client then sends Ajax requests to the HTTP endpoint (using the
 id) every second to get updates on the progress. It does this until
 the progress report "is_done" is set to 1.
 
@@ -153,9 +155,12 @@ the progress report "is_done" is set to 1.
 Time::Progress::Stored can use various backends to store the
 status.
 
-Current backends are Redis and Memory. They are tiny and it would be
-simple to write another backend for e.g. a file, or using one of the
-Cache or CHI modules. Patches more than welcome.
+Current backends are Redis and Memory. Memory is mainly for testing
+and not very useful for real life scenarios.
+
+The backends are tiny and it would be simple to write another backend
+for e.g. a file, or using one of the Cache or CHI modules. Patches
+more than welcome.
 
 
 
