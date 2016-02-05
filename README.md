@@ -12,7 +12,7 @@ progress, but you need to actually display the progress to the user in a
 different process.
 
 Typically this is a long running web request in the web server or in a
-job queue qorker, while the web browser periodically sends ajax requests
+job queue worker, while the web browser periodically sends ajax requests
 to get updated on the current progress status to show in a progress bar.
 
 Time::Progress::Stored stores the progress report as the worker performs
