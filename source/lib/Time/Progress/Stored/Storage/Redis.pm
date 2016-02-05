@@ -20,7 +20,7 @@ use JSON::Tiny qw/ encode_json decode_json /;
 
 has redis => (
     is       => "ro",
-    isa      => "Redis",
+    isa      => sub { shift->isa("Redis") },
     required => 1,
 );
 

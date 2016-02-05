@@ -4,9 +4,14 @@ Feature oriented Revision history for Time-Progress-Stored
 
 {{$NEXT}}
 
+* Fix Moo isa declaration for Redis
+
+
+
 1.001 -- 2016-02-04 19:02:59 UTC
 
 * Doc improvements
+
 
 
 1.000 -- 2016-02-04 18:35:23 UTC
